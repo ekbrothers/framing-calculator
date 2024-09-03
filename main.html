@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framing Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        input, select { margin-bottom: 10px; }
+        #ruler { width: 100%; height: 50px; background: #f0f0f0; position: relative; margin-top: 20px; }
+        #marker { position: absolute; width: 2px; height: 50px; background: red; }
+    </style>
+</head>
+<body>
+    <h1>Framing Calculator</h1>
+    
+    <form id="framingForm">
+        <label for="artType">Art or Historic Piece:</label>
+        <input type="text" id="artType" required><br>
+        
+        <label for="fullSizeWidth">Full Size Width (inches):</label>
+        <input type="number" id="fullSizeWidth" step="0.125" required><br>
+        
+        <label for="fullSizeHeight">Full Size Height (inches):</label>
+        <input type="number" id="fullSizeHeight" step="0.125" required><br>
+        
+        <label for="artDepth">Art Depth (inches):</label>
+        <input type="number" id="artDepth" step="0.125" required><br>
+        
+        <label for="viewingAreaWidth">Viewing Area Width (inches):</label>
+        <input type="number" id="viewingAreaWidth" step="0.125" required><br>
+        
+        <label for="viewingAreaHeight">Viewing Area Height (inches):</label>
+        <input type="number" id="viewingAreaHeight" step="0.125" required><br>
+        
+        <label for="artBuffer">Art Buffer (inches):</label>
+        <input type="number" id="artBuffer" step="0.125" required><br>
+        
+        <label for="matHoldingArea">Mat Holding Area (inches):</label>
+        <input type="number" id="matHoldingArea" value="0.25" step="0.125" required><br>
+        
+        <label for="matSize">Mat Size (inches):</label>
+        <input type="number" id="matSize" step="0.125" required><br>
+        
+        <input type="checkbox" id="sameProportions">
+        <label for="sameProportions">Same proportions around</label><br>
+        
+        <input type="checkbox" id="goldenRatio">
+        <label for="goldenRatio">Apply Golden Ratio to bottom margin</label><br>
+        
+        <label for="frameWidth">Frame Width (inches, optional):</label>
+        <input type="number" id="frameWidth" step="0.125"><br>
+        
+        <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+
+    <div id="results"></div>
+    
+    <div id="ruler">
+        <div id="marker"></div>
+    </div>
+
+    <button onclick="generatePDF()">Export to PDF</button>
+
+    <script>
+        function calculate() {
+            // Perform calculations here
+            const results = {
+                totalMatOuterDimensions: { width: 0, height: 0 },
+                matViewingWindow: { width: 0, height: 0 },
+                frameInnerDimensions: { width: 0, height: 0 }
+            };
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <h2>Results:</h2>
+                <p>Total Mat Outer Dimensions: ${results.totalMatOuterDimensions.width}" x ${results.totalMatOuterDimensions.height}"</p>
+                <p>Mat Viewing Window: ${results.matViewingWindow.width}" x ${results.matViewingWindow.height}"</p>
+                <p>Frame Inner Dimensions: ${results.frameInnerDimensions.width}" x ${results.frameInnerDimensions.height}"</p>
+            `;
+
+            // Update ruler
+            updateRuler(results.totalMatOuterDimensions.width);
+        }
+
+        function updateRuler(measurement) {
+            const ruler = document.getElementById('ruler');
+            const marker = document.getElementById('marker');
+            const rulerWidth = ruler.offsetWidth;
+            const position = (measurement / 36) * rulerWidth; // Assuming max 36 inches
+            marker.style.left = `${position}px`;
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Framing Calculations", 10, 10);
+            // Add more content to the PDF
+            doc.save("framing-calculations.pdf");
+        }
+    </script>
+</body>
+</html>
