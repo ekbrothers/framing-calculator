@@ -189,133 +189,134 @@
         <h1>Framing Calculator</h1>
         
         <form id="framingForm" novalidate>
-            <label for="artType">Art or Historic Piece</label>
-            <input type="text" id="artType" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Enter the type of artwork or historic piece you're framing, e.g., 'Oil Painting', 'Photograph', 'Document'</span>
-            </div>
-            <span id="artTypeError" class="error"></span>
-            
-            <label for="fullSizeWidth">Full Size Width (inches)</label>
-            <input type="number" id="fullSizeWidth" step="0.125" min="0" max="100" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the full width of your piece, including any borders or margins</span>
-            </div>
-            <span id="fullSizeWidthError" class="error"></span>
-            
-            <label for="fullSizeHeight">Full Size Height (inches)</label>
-            <input type="number" id="fullSizeHeight" step="0.125" min="0" max="100" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the full height of your piece, including any borders or margins</span>
-            </div>
-            <span id="fullSizeHeightError" class="error"></span>
-            
-            <label for="artDepth">Art Depth (inches, optional)</label>
-            <input type="number" id="artDepth" step="0.125" min="0" max="10">
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the thickness of your piece. This is optional but helpful for selecting appropriate framing materials</span>
-            </div>
-            <span id="artDepthError" class="error"></span>
-            
-            <label for="viewingAreaWidth">Viewing Area Width (inches)</label>
-            <input type="number" id="viewingAreaWidth" step="0.125" min="0" max="100" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the width of the area you want visible after framing, excluding any borders or margins you want covered</span>
-            </div>
-            <span id="viewingAreaWidthError" class="error"></span>
-            
-            <label for="viewingAreaHeight">Viewing Area Height (inches)</label>
-            <input type="number" id="viewingAreaHeight" step="0.125" min="0" max="100" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the height of the area you want visible after framing, excluding any borders or margins you want covered</span>
-            </div>
-            <span id="viewingAreaHeightError" class="error"></span>
-            
-            <label for="artBuffer">Art Buffer (inches)</label>
-            <input type="number" id="artBuffer" step="0.125" min="0" max="10" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">The extra space around the viewing area that will be covered by the mat but is part of the artwork. This helps prevent the mat from covering important details</span>
-            </div>
-            <span id="artBufferError" class="error"></span>
-            
-            <label for="matHoldingArea">Mat Holding Area (inches)</label>
-            <input type="number" id="matHoldingArea" value="0.25" step="0.125" min="0" max="2" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">The amount of overlap between the mat and the artwork. Typically 1/4 inch (0.25) all around</span>
-            </div>
-            <span id="matHoldingAreaError" class="error"></span>
-            
-            <fieldset>
-                <legend>Mat Size (inches)</legend>
-                <label for="matSizeTop">Top</label>
-                <input type="number" id="matSizeTop" step="0.125" min="0" max="10" required>
-                <div class="tooltip-container">
-                    <span class="info-icon">i</span>
-                    <span class="tooltip-text">The width of the mat at the top of the artwork</span>
-                </div>
-                <span id="matSizeTopError" class="error"></span>
+    <label for="artType">Artwork Medium</label>
+    <input type="text" id="artType" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Specify the medium of the artwork, e.g., 'Oil on Canvas', 'Watercolor', 'Giclée Print', 'Photograph'</span>
+    </div>
+    <span id="artTypeError" class="error"></span>
+    
+    <label for="fullSizeWidth">Artwork Width (inches)</label>
+    <input type="number" id="fullSizeWidth" step="0.125" min="0" max="100" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Measure the full width of the artwork, including any borders or margins</span>
+    </div>
+    <span id="fullSizeWidthError" class="error"></span>
+    
+    <label for="fullSizeHeight">Artwork Height (inches)</label>
+    <input type="number" id="fullSizeHeight" step="0.125" min="0" max="100" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Measure the full height of the artwork, including any borders or margins</span>
+    </div>
+    <span id="fullSizeHeightError" class="error"></span>
+    
+    <label for="artDepth">Artwork Depth (inches, optional)</label>
+    <input type="number" id="artDepth" step="0.125" min="0" max="10">
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Measure the thickness of the artwork. Important for selecting appropriate framing materials and determining rabbet depth</span>
+    </div>
+    <span id="artDepthError" class="error"></span>
+    
+    <label for="viewingAreaWidth">Image Area Width (inches)</label>
+    <input type="number" id="viewingAreaWidth" step="0.125" min="0" max="100" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Measure the width of the actual image or the area you want visible after framing, excluding any borders or margins you want covered</span>
+    </div>
+    <span id="viewingAreaWidthError" class="error"></span>
+    
+    <label for="viewingAreaHeight">Image Area Height (inches)</label>
+    <input type="number" id="viewingAreaHeight" step="0.125" min="0" max="100" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Measure the height of the actual image or the area you want visible after framing, excluding any borders or margins you want covered</span>
+    </div>
+    <span id="viewingAreaHeightError" class="error"></span>
+    
+    <label for="artBuffer">Float Margin (inches)</label>
+    <input type="number" id="artBuffer" step="0.125" min="0" max="10" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">The extra space around the image area that will be visible but not covered by the mat. Used for float mounting to show edges of the artwork</span>
+    </div>
+    <span id="artBufferError" class="error"></span>
+    
+    <label for="matHoldingArea">Mat Reveal (inches)</label>
+    <input type="number" id="matHoldingArea" value="0.25" step="0.125" min="0" max="2" required>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">The amount of overlap between the mat and the artwork. Typically 1/4 inch (0.25) all around. Also known as the lip or borders</span>
+    </div>
+    <span id="matHoldingAreaError" class="error"></span>
+    
+    <fieldset>
+        <legend>Mat Border Widths (inches)</legend>
+        <label for="matSizeTop">Top</label>
+        <input type="number" id="matSizeTop" step="0.125" min="0" max="10" required>
+        <div class="tooltip-container">
+            <span class="info-icon">i</span>
+            <span class="tooltip-text">The width of the mat border at the top of the artwork</span>
+        </div>
+        <span id="matSizeTopError" class="error"></span>
 
-                <label for="matSizeRight">Right</label>
-                <input type="number" id="matSizeRight" step="0.125" min="0" max="10" required>
-                <div class="tooltip-container">
-                    <span class="info-icon">i</span>
-                    <span class="tooltip-text">The width of the mat on the right side of the artwork</span>
-                </div>
-                <span id="matSizeRightError" class="error"></span>
+        <label for="matSizeRight">Right</label>
+        <input type="number" id="matSizeRight" step="0.125" min="0" max="10" required>
+        <div class="tooltip-container">
+            <span class="info-icon">i</span>
+            <span class="tooltip-text">The width of the mat border on the right side of the artwork</span>
+        </div>
+        <span id="matSizeRightError" class="error"></span>
 
-                <label for="matSizeBottom">Bottom</label>
-                <input type="number" id="matSizeBottom" step="0.125" min="0" max="10" required>
-                <div class="tooltip-container">
-                    <span class="info-icon">i</span>
-                    <span class="tooltip-text">The width of the mat at the bottom of the artwork</span>
-                </div>
-                <span id="matSizeBottomError" class="error"></span>
+        <label for="matSizeBottom">Bottom</label>
+        <input type="number" id="matSizeBottom" step="0.125" min="0" max="10" required>
+        <div class="tooltip-container">
+            <span class="info-icon">i</span>
+            <span class="tooltip-text">The width of the mat border at the bottom of the artwork</span>
+        </div>
+        <span id="matSizeBottomError" class="error"></span>
 
-                <label for="matSizeLeft">Left</label>
-                <input type="number" id="matSizeLeft" step="0.125" min="0" max="10" required>
-                <div class="tooltip-container">
-                    <span class="info-icon">i</span>
-                    <span class="tooltip-text">The width of the mat on the left side of the artwork</span>
-                </div>
-                <span id="matSizeLeftError" class="error"></span>
-            </fieldset>
-            
-            <label>
-                <input type="checkbox" id="sameProportions">
-                Same proportions around
-            </label>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Check this to automatically set all mat sizes to be the same</span>
-            </div>
-            
-            <label>
-                <input type="checkbox" id="goldenRatio">
-                Apply Golden Ratio to bottom margin
-            </label>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Check this to automatically adjust the bottom mat size according to the Golden Ratio for aesthetic balance</span>
-            </div>
-            
-            <label for="frameWidth">Frame Width (inches, optional)</label>
-            <input type="number" id="frameWidth" step="0.125" min="0" max="10">
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">The width of the frame molding. This is optional but helps in calculating the overall dimensions</span>
-            </div>
-            <span id="frameWidthError" class="error"></span>
-            
-            <button type="button" onclick="validateAndCalculate()">Calculate</button>
-        </form>
+        <label for="matSizeLeft">Left</label>
+        <input type="number" id="matSizeLeft" step="0.125" min="0" max="10" required>
+        <div class="tooltip-container">
+            <span class="info-icon">i</span>
+            <span class="tooltip-text">The width of the mat border on the left side of the artwork</span>
+        </div>
+        <span id="matSizeLeftError" class="error"></span>
+    </fieldset>
+    
+    <label>
+        <input type="checkbox" id="sameProportions">
+        Uniform Mat Borders
+    </label>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Check this to automatically set all mat border widths to be the same</span>
+    </div>
+    
+    <label>
+        <input type="checkbox" id="goldenRatio">
+        Apply Golden Ratio to Bottom Mat
+    </label>
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">Check this to automatically adjust the bottom mat border width according to the Golden Ratio for aesthetic balance</span>
+    </div>
+    
+    <label for="frameWidth">Moulding Width (inches, optional)</label>
+    <input type="number" id="frameWidth" step="0.125" min="0" max="10">
+    <div class="tooltip-container">
+        <span class="info-icon">i</span>
+        <span class="tooltip-text">The width of the frame moulding. This is optional but helps in calculating the overall dimensions</span>
+    </div>
+    <span id="frameWidthError" class="error"></span>
+    
+    <button type="button" onclick="validateAndCalculate()">Calculate</button>
+</form>
+
 
         <div id="results"></div>
         
