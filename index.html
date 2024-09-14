@@ -59,7 +59,7 @@
         select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             background-color: var(--background);
             border: 1px solid var(--primary-color);
             border-radius: 4px;
@@ -104,6 +104,12 @@
             width: 100px;
         }
 
+        .input-description {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
         #results, #suggestions {
             margin-top: 20px;
             background-color: var(--surface);
@@ -143,6 +149,7 @@
                 <label for="artworkName">Artwork Name:</label>
                 <input type="text" id="artworkName" required>
             </div>
+            <p class="input-description">Enter the name or title of the artwork being framed.</p>
 
             <!-- =====================
                  SIGHT SIZE INPUTS
@@ -158,6 +165,7 @@
                 <input type="number" id="sightSizeHeightWhole" min="0" max="100" required>
                 <select id="sightSizeHeightFraction"></select>
             </div>
+            <p class="input-description">Enter the visible dimensions of the artwork. This is the area that will be seen through the mat opening.</p>
 
             <!-- =====================
                  ARTWORK BORDER INPUTS
@@ -183,6 +191,7 @@
                 <input type="number" id="artworkBorderLeftWhole" min="0" max="100" required>
                 <select id="artworkBorderLeftFraction"></select>
             </div>
+            <p class="input-description">Enter the dimensions of any border or margin around the artwork that should be included under the mat. This will be added to the sight size to calculate the mat opening.</p>
 
             <!-- =====================
                  OVERALL SIZE INPUTS
@@ -198,6 +207,7 @@
                 <input type="number" id="overallSizeHeightWhole" min="0" max="100" required>
                 <select id="overallSizeHeightFraction"></select>
             </div>
+            <p class="input-description">Enter the total dimensions of the artwork, including any borders or margins. This is used for reference and is not used in calculations.</p>
 
             <!-- =====================
                  MAT SIZE INPUTS
@@ -223,9 +233,10 @@
                 <input type="number" id="matSizeLeftWhole" min="0" max="100" required>
                 <select id="matSizeLeftFraction"></select>
             </div>
+            <p class="input-description">Enter the desired width of the mat on each side of the artwork. This will be added to the mat opening to calculate the full mat size.</p>
 
             <!-- =====================
-                 Rabbet SIZE INPUT
+                 RABBET SIZE INPUT
                  ===================== -->
             <h2>Rabbet Size</h2>
             <div class="dimension-input">
@@ -233,6 +244,7 @@
                 <input type="number" id="rabbetSizeWhole" min="0" max="100" value="0.25" required>
                 <select id="rabbetSizeFraction"></select>
             </div>
+            <p class="input-description">Enter the depth of the rabbet (the recess in the frame that holds the artwork and mat). This is used to calculate the full mat size and inner frame diameter.</p>
 
             <button type="button" onclick="validateAndCalculate()">Calculate</button>
         </form>
@@ -356,9 +368,10 @@
 
         // Calculate inner frame diameter
         function calculateInnerFrameDiameter(fullMatSize) {
+            const adjustment = 1/8; // 1/8 inch adjustment to prevent binding
             return {
-                width: fullMatSize.width,
-                height: fullMatSize.height
+                width: fullMatSize.width + adjustment,
+                height: fullMatSize.height + adjustment
             };
         }
 
@@ -395,10 +408,10 @@
                     </div>
                     <div class="result-item">
                         <h3>Mat Size</h3>
-                        <p>Height Top: ${decimalToFraction(matSize.top)}"</p>
-                        <p>Height Bottom: ${decimalToFraction(matSize.bottom)}"</p>
-                        <p>Width Left: ${decimalToFraction(matSize.left)}"</p>
-                        <p>Width Right: ${decimalToFraction(matSize.right)}"</p>
+                        <p>Height Top: ${decimalToFraction(matSize.top)} inches</p>
+                        <p>Height Bottom: ${decimalToFraction(matSize.bottom)} inches</p>
+                        <p>Width Left: ${decimalToFraction(matSize.left)} inches</p>
+                        <p>Width Right: ${decimalToFraction(matSize.right)} inches</p>
                     </div>
                     <div class="result-item">
                         <h3>Mat Opening</h3>
