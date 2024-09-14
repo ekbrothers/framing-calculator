@@ -129,39 +129,25 @@
             opacity: 1;
         }
 
-        #ruler {
-            width: 100%;
-            height: 50px;
-            background-color: var(--surface);
-            position: relative;
-            margin-top: 20px;
-            border-radius: 4px;
-        }
-
-        #marker {
-            position: absolute;
-            width: 2px;
-            height: 50px;
-            background-color: var(--secondary-color);
-        }
-
-        #results {
-            margin-top: 20px;
-            background-color: var(--surface);
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        fieldset {
-            border: 1px solid var(--primary-color);
-            border-radius: 4px;
-            padding: 10px;
+        .dimension-input {
+            display: flex;
+            align-items: center;
             margin-bottom: 15px;
         }
 
-        legend {
-            color: var(--primary-color);
-            padding: 0 5px;
+        .dimension-input input[type="number"] {
+            width: 70px;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+
+        .dimension-input select {
+            width: 80px;
+            padding: 10px;
+            background-color: var(--background);
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            color: var(--on-background);
         }
 
         @media (max-width: 600px) {
@@ -175,7 +161,7 @@
 
             input[type="text"],
             input[type="number"] {
-                font-size: 16px; /* Prevents zoom on mobile */
+                font-size: 16px;
             }
 
             button {
@@ -189,140 +175,74 @@
         <h1>Framing Calculator</h1>
         
         <form id="framingForm" novalidate>
-    <label for="artType">Artwork Medium</label>
-    <input type="text" id="artType" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Specify the medium of the artwork, e.g., 'Oil on Canvas', 'Watercolor', 'Giclée Print', 'Photograph'</span>
-    </div>
-    <span id="artTypeError" class="error"></span>
-    
-    <label for="fullSizeWidth">Artwork Width (inches)</label>
-    <input type="number" id="fullSizeWidth" step="0.125" min="0" max="100" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Measure the full width of the artwork, including any borders or margins</span>
-    </div>
-    <span id="fullSizeWidthError" class="error"></span>
-    
-    <label for="fullSizeHeight">Artwork Height (inches)</label>
-    <input type="number" id="fullSizeHeight" step="0.125" min="0" max="100" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Measure the full height of the artwork, including any borders or margins</span>
-    </div>
-    <span id="fullSizeHeightError" class="error"></span>
-    
-    <label for="artDepth">Artwork Depth (inches, optional)</label>
-    <input type="number" id="artDepth" step="0.125" min="0" max="10">
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Measure the thickness of the artwork. Important for selecting appropriate framing materials and determining rabbet depth</span>
-    </div>
-    <span id="artDepthError" class="error"></span>
-    
-    <label for="viewingAreaWidth">Image Area Width (inches)</label>
-    <input type="number" id="viewingAreaWidth" step="0.125" min="0" max="100" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Measure the width of the actual image or the area you want visible after framing, excluding any borders or margins you want covered</span>
-    </div>
-    <span id="viewingAreaWidthError" class="error"></span>
-    
-    <label for="viewingAreaHeight">Image Area Height (inches)</label>
-    <input type="number" id="viewingAreaHeight" step="0.125" min="0" max="100" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Measure the height of the actual image or the area you want visible after framing, excluding any borders or margins you want covered</span>
-    </div>
-    <span id="viewingAreaHeightError" class="error"></span>
-    
-    <label for="artBuffer">Float Margin (inches)</label>
-    <input type="number" id="artBuffer" step="0.125" min="0" max="10" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">The extra space around the image area that will be visible but not covered by the mat. Used for float mounting to show edges of the artwork</span>
-    </div>
-    <span id="artBufferError" class="error"></span>
-    
-    <label for="matHoldingArea">Mat Reveal (inches)</label>
-    <input type="number" id="matHoldingArea" value="0.25" step="0.125" min="0" max="2" required>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">The amount of overlap between the mat and the artwork. Typically 1/4 inch (0.25) all around. Also known as the lip or borders</span>
-    </div>
-    <span id="matHoldingAreaError" class="error"></span>
-    
-    <fieldset>
-        <legend>Mat Border Widths (inches)</legend>
-        <label for="matSizeTop">Top</label>
-        <input type="number" id="matSizeTop" step="0.125" min="0" max="10" required>
-        <div class="tooltip-container">
-            <span class="info-icon">i</span>
-            <span class="tooltip-text">The width of the mat border at the top of the artwork</span>
-        </div>
-        <span id="matSizeTopError" class="error"></span>
+            <label for="artTitle">Artwork Title</label>
+            <input type="text" id="artTitle" required>
+            <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Enter the title of the artwork.</span>
+            </div>
+            <span id="artTitleError" class="error"></span>
 
-        <label for="matSizeRight">Right</label>
-        <input type="number" id="matSizeRight" step="0.125" min="0" max="10" required>
-        <div class="tooltip-container">
-            <span class="info-icon">i</span>
-            <span class="tooltip-text">The width of the mat border on the right side of the artwork</span>
-        </div>
-        <span id="matSizeRightError" class="error"></span>
+            <label>Artwork Width (inches)</label>
+            <div class="dimension-input">
+                <input type="number" id="fullSizeWidthWhole" min="0" max="100" required>
+                <select id="fullSizeWidthFraction">
+                    <option value="0">0</option>
+                    <option value="0.0625">1/16</option>
+                    <option value="0.125">1/8</option>
+                    <option value="0.1875">3/16</option>
+                    <option value="0.25">1/4</option>
+                    <option value="0.3125">5/16</option>
+                    <option value="0.375">3/8</option>
+                    <option value="0.4375">7/16</option>
+                    <option value="0.5">1/2</option>
+                    <option value="0.5625">9/16</option>
+                    <option value="0.625">5/8</option>
+                    <option value="0.6875">11/16</option>
+                    <option value="0.75">3/4</option>
+                    <option value="0.8125">13/16</option>
+                    <option value="0.875">7/8</option>
+                    <option value="0.9375">15/16</option>
+                </select>
+            </div>
+            <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Measure the full width of the artwork, including any borders or margins</span>
+            </div>
+            <span id="fullSizeWidthError" class="error"></span>
 
-        <label for="matSizeBottom">Bottom</label>
-        <input type="number" id="matSizeBottom" step="0.125" min="0" max="10" required>
-        <div class="tooltip-container">
-            <span class="info-icon">i</span>
-            <span class="tooltip-text">The width of the mat border at the bottom of the artwork</span>
-        </div>
-        <span id="matSizeBottomError" class="error"></span>
+            <label>Artwork Height (inches)</label>
+            <div class="dimension-input">
+                <input type="number" id="fullSizeHeightWhole" min="0" max="100" required>
+                <select id="fullSizeHeightFraction">
+                    <option value="0">0</option>
+                    <option value="0.0625">1/16</option>
+                    <option value="0.125">1/8</option>
+                    <option value="0.1875">3/16</option>
+                    <option value="0.25">1/4</option>
+                    <option value="0.3125">5/16</option>
+                    <option value="0.375">3/8</option>
+                    <option value="0.4375">7/16</option>
+                    <option value="0.5">1/2</option>
+                    <option value="0.5625">9/16</option>
+                    <option value="0.625">5/8</option>
+                    <option value="0.6875">11/16</option>
+                    <option value="0.75">3/4</option>
+                    <option value="0.8125">13/16</option>
+                    <option value="0.875">7/8</option>
+                    <option value="0.9375">15/16</option>
+                </select>
+            </div>
+            <div class="tooltip-container">
+                <span class="info-icon">i</span>
+                <span class="tooltip-text">Measure the full height of the artwork, including any borders or margins</span>
+            </div>
+            <span id="fullSizeHeightError" class="error"></span>
 
-        <label for="matSizeLeft">Left</label>
-        <input type="number" id="matSizeLeft" step="0.125" min="0" max="10" required>
-        <div class="tooltip-container">
-            <span class="info-icon">i</span>
-            <span class="tooltip-text">The width of the mat border on the left side of the artwork</span>
-        </div>
-        <span id="matSizeLeftError" class="error"></span>
-    </fieldset>
-    
-    <label>
-        <input type="checkbox" id="sameProportions">
-        Uniform Mat Borders
-    </label>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Check this to automatically set all mat border widths to be the same</span>
-    </div>
-    
-    <label>
-        <input type="checkbox" id="goldenRatio">
-        Apply Golden Ratio to Bottom Mat
-    </label>
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">Check this to automatically adjust the bottom mat border width according to the Golden Ratio for aesthetic balance</span>
-    </div>
-    
-    <label for="frameWidth">Moulding Width (inches, optional)</label>
-    <input type="number" id="frameWidth" step="0.125" min="0" max="10">
-    <div class="tooltip-container">
-        <span class="info-icon">i</span>
-        <span class="tooltip-text">The width of the frame moulding. This is optional but helps in calculating the overall dimensions</span>
-    </div>
-    <span id="frameWidthError" class="error"></span>
-    
-    <button type="button" onclick="validateAndCalculate()">Calculate</button>
-</form>
-
+            <button type="button" onclick="validateAndCalculate()">Calculate</button>
+        </form>
 
         <div id="results"></div>
-        
-        <div id="ruler">
-            <div id="marker"></div>
-        </div>
 
         <button onclick="generatePDF()">Export to PDF</button>
     </div>
@@ -340,7 +260,7 @@
             let isValid = true;
 
             inputs.forEach(input => {
-                const errorSpan = document.getElementById(`${input.id}Error`);
+                const errorSpan = document.getElementById(`${input.id.replace('Whole', '')}Error`);
                 if (errorSpan) errorSpan.textContent = '';
 
                 if (input.hasAttribute('required') && !input.value.trim()) {
@@ -361,26 +281,40 @@
                 }
             });
 
-            // Additional custom validations
-            const viewingAreaWidth = parseFloat(document.getElementById('viewingAreaWidth').value);
-            const fullSizeWidth = parseFloat(document.getElementById('fullSizeWidth').value);
-            if (viewingAreaWidth > fullSizeWidth) {
-                document.getElementById('viewingAreaWidthError').textContent = 'Viewing area width cannot exceed full size width.';
-                isValid = false;
-            }
-
-            const viewingAreaHeight = parseFloat(document.getElementById('viewingAreaHeight').value);
-            const fullSizeHeight = parseFloat(document.getElementById('fullSizeHeight').value);
-            if (viewingAreaHeight > fullSizeHeight) {
-                document.getElementById('viewingAreaHeightError').textContent = 'Viewing area height cannot exceed full size height.';
-                isValid = false;
-            }
-
             return isValid;
         }
 
         function calculate() {
-            // Perform calculations here (placeholder for now)
+            const widthWhole = parseFloat(document.getElementById('fullSizeWidthWhole').value) || 0;
+            const widthFraction = parseFloat(document.getElementById('fullSizeWidthFraction').value) || 0;
+            const heightWhole = parseFloat(document.getElementById('fullSizeHeightWhole').value) || 0;
+            const heightFraction = parseFloat(document.getElementById('fullSizeHeightFraction').value) || 0;
+
+            const totalWidth = widthWhole + widthFraction;
+            const totalHeight = heightWhole + heightFraction;
+
+            // Placeholder for calculations
             const results = {
-                totalMatOuterDimensions: { width: 30, height: 40 },
-                matView
+                totalMatOuterDimensions: { width: totalWidth + 10, height: totalHeight + 10 },
+                matView: { width: totalWidth, height: totalHeight }
+            };
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <p>Total Mat Outer Dimensions: ${results.totalMatOuterDimensions.width.toFixed(4)} x ${results.totalMatOuterDimensions.height.toFixed(4)} inches</p>
+                <p>Mat View Dimensions: ${results.matView.width.toFixed(4)} x ${results.matView.height.toFixed(4)} inches</p>
+            `;
+        }
+
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Framing Calculator Results", 10, 10);
+            doc.save("Framing_Calculator_Results.pdf");
+        }
+    </script>
+</body>
+</html>
