@@ -33,10 +33,9 @@
             padding: 20px;
         }
 
-        h1 {
+        h1, h2 {
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 30px;
         }
 
         form {
@@ -52,19 +51,14 @@
             color: var(--on-surface);
         }
 
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
+        input[type="number"], select {
+            width: 70px;
             padding: 10px;
             margin-bottom: 15px;
             background-color: var(--background);
             border: 1px solid var(--primary-color);
             border-radius: 4px;
             color: var(--on-background);
-        }
-
-        input[type="checkbox"] {
-            margin-right: 10px;
         }
 
         button {
@@ -89,84 +83,22 @@
             margin-bottom: 10px;
         }
 
-        .tooltip-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .info-icon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background-color: var(--primary-color);
-            color: var(--on-primary);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 20px;
-            margin-left: 5px;
-            cursor: pointer;
-        }
-
-        .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background-color: var(--surface);
-            color: var(--on-surface);
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-
         .dimension-input {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
         }
 
-        .dimension-input input[type="number"] {
-            width: 70px;
+        .dimension-input label {
             margin-right: 10px;
-            margin-bottom: 0;
+            width: 100px;
         }
 
-        .dimension-input select {
-            width: 80px;
-            padding: 10px;
-            background-color: var(--background);
-            border: 1px solid var(--primary-color);
-            border-radius: 4px;
-            color: var(--on-background);
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-
-            form {
-                padding: 15px;
-            }
-
-            input[type="text"],
-            input[type="number"] {
-                font-size: 16px;
-            }
-
-            button {
-                width: 100%;
-            }
+        #results, #suggestions {
+            margin-top: 20px;
+            background-color: var(--surface);
+            padding: 20px;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -175,79 +107,135 @@
         <h1>Framing Calculator</h1>
         
         <form id="framingForm" novalidate>
-            <label for="artTitle">Artwork Title</label>
-            <input type="text" id="artTitle" required>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Enter the title of the artwork.</span>
-            </div>
-            <span id="artTitleError" class="error"></span>
-
-            <label>Artwork Width (inches)</label>
+            <h2>Sight Size</h2>
             <div class="dimension-input">
-                <input type="number" id="fullSizeWidthWhole" min="0" max="100" required>
-                <select id="fullSizeWidthFraction">
-                    <option value="0">0</option>
-                    <option value="0.0625">1/16</option>
-                    <option value="0.125">1/8</option>
-                    <option value="0.1875">3/16</option>
-                    <option value="0.25">1/4</option>
-                    <option value="0.3125">5/16</option>
-                    <option value="0.375">3/8</option>
-                    <option value="0.4375">7/16</option>
-                    <option value="0.5">1/2</option>
-                    <option value="0.5625">9/16</option>
-                    <option value="0.625">5/8</option>
-                    <option value="0.6875">11/16</option>
-                    <option value="0.75">3/4</option>
-                    <option value="0.8125">13/16</option>
-                    <option value="0.875">7/8</option>
-                    <option value="0.9375">15/16</option>
-                </select>
+                <label for="sightSizeWidthWhole">Width:</label>
+                <input type="number" id="sightSizeWidthWhole" min="0" max="100" required>
+                <select id="sightSizeWidthFraction"></select>
             </div>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the full width of the artwork, including any borders or margins</span>
-            </div>
-            <span id="fullSizeWidthError" class="error"></span>
-
-            <label>Artwork Height (inches)</label>
             <div class="dimension-input">
-                <input type="number" id="fullSizeHeightWhole" min="0" max="100" required>
-                <select id="fullSizeHeightFraction">
-                    <option value="0">0</option>
-                    <option value="0.0625">1/16</option>
-                    <option value="0.125">1/8</option>
-                    <option value="0.1875">3/16</option>
-                    <option value="0.25">1/4</option>
-                    <option value="0.3125">5/16</option>
-                    <option value="0.375">3/8</option>
-                    <option value="0.4375">7/16</option>
-                    <option value="0.5">1/2</option>
-                    <option value="0.5625">9/16</option>
-                    <option value="0.625">5/8</option>
-                    <option value="0.6875">11/16</option>
-                    <option value="0.75">3/4</option>
-                    <option value="0.8125">13/16</option>
-                    <option value="0.875">7/8</option>
-                    <option value="0.9375">15/16</option>
-                </select>
+                <label for="sightSizeHeightWhole">Height:</label>
+                <input type="number" id="sightSizeHeightWhole" min="0" max="100" required>
+                <select id="sightSizeHeightFraction"></select>
             </div>
-            <div class="tooltip-container">
-                <span class="info-icon">i</span>
-                <span class="tooltip-text">Measure the full height of the artwork, including any borders or margins</span>
+
+            <h2>Overall Size</h2>
+            <div class="dimension-input">
+                <label for="overallSizeWidthWhole">Width:</label>
+                <input type="number" id="overallSizeWidthWhole" min="0" max="100" required>
+                <select id="overallSizeWidthFraction"></select>
             </div>
-            <span id="fullSizeHeightError" class="error"></span>
+            <div class="dimension-input">
+                <label for="overallSizeHeightWhole">Height:</label>
+                <input type="number" id="overallSizeHeightWhole" min="0" max="100" required>
+                <select id="overallSizeHeightFraction"></select>
+            </div>
+
+            <h2>Mat Size</h2>
+            <div class="dimension-input">
+                <label for="matSizeTopWhole">Top:</label>
+                <input type="number" id="matSizeTopWhole" min="0" max="100" required>
+                <select id="matSizeTopFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="matSizeRightWhole">Right:</label>
+                <input type="number" id="matSizeRightWhole" min="0" max="100" required>
+                <select id="matSizeRightFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="matSizeBottomWhole">Bottom:</label>
+                <input type="number" id="matSizeBottomWhole" min="0" max="100" required>
+                <select id="matSizeBottomFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="matSizeLeftWhole">Left:</label>
+                <input type="number" id="matSizeLeftWhole" min="0" max="100" required>
+                <select id="matSizeLeftFraction"></select>
+            </div>
+
+            <h2>Margin Size</h2>
+            <div class="dimension-input">
+                <label for="marginSizeWhole">Uniform:</label>
+                <input type="number" id="marginSizeWhole" min="0" max="100" required>
+                <select id="marginSizeFraction"></select>
+            </div>
+            <button type="button" id="customMarginBtn">Custom Margins</button>
+            <div id="customMargins" style="display: none;">
+                <div class="dimension-input">
+                    <label for="marginSizeTopWhole">Top:</label>
+                    <input type="number" id="marginSizeTopWhole" min="0" max="100">
+                    <select id="marginSizeTopFraction"></select>
+                </div>
+                <div class="dimension-input">
+                    <label for="marginSizeRightWhole">Right:</label>
+                    <input type="number" id="marginSizeRightWhole" min="0" max="100">
+                    <select id="marginSizeRightFraction"></select>
+                </div>
+                <div class="dimension-input">
+                    <label for="marginSizeBottomWhole">Bottom:</label>
+                    <input type="number" id="marginSizeBottomWhole" min="0" max="100">
+                    <select id="marginSizeBottomFraction"></select>
+                </div>
+                <div class="dimension-input">
+                    <label for="marginSizeLeftWhole">Left:</label>
+                    <input type="number" id="marginSizeLeftWhole" min="0" max="100">
+                    <select id="marginSizeLeftFraction"></select>
+                </div>
+            </div>
+
+            <h2>Rabbit Size</h2>
+            <div class="dimension-input">
+                <label for="rabbitSizeWhole">Size:</label>
+                <input type="number" id="rabbitSizeWhole" min="0" max="100" value="0.25" required>
+                <select id="rabbitSizeFraction"></select>
+            </div>
 
             <button type="button" onclick="validateAndCalculate()">Calculate</button>
         </form>
 
+        <div id="suggestions"></div>
         <div id="results"></div>
 
         <button onclick="generatePDF()">Export to PDF</button>
     </div>
 
     <script>
+        const fractions = [
+            {value: 0, text: "0"},
+            {value: 0.0625, text: "1/16"},
+            {value: 0.125, text: "1/8"},
+            {value: 0.1875, text: "3/16"},
+            {value: 0.25, text: "1/4"},
+            {value: 0.3125, text: "5/16"},
+            {value: 0.375, text: "3/8"},
+            {value: 0.4375, text: "7/16"},
+            {value: 0.5, text: "1/2"},
+            {value: 0.5625, text: "9/16"},
+            {value: 0.625, text: "5/8"},
+            {value: 0.6875, text: "11/16"},
+            {value: 0.75, text: "3/4"},
+            {value: 0.8125, text: "13/16"},
+            {value: 0.875, text: "7/8"},
+            {value: 0.9375, text: "15/16"}
+        ];
+
+        function populateFractionDropdowns() {
+            const fractionSelects = document.querySelectorAll('select');
+            fractionSelects.forEach(select => {
+                fractions.forEach(fraction => {
+                    const option = document.createElement('option');
+                    option.value = fraction.value;
+                    option.textContent = fraction.text;
+                    select.appendChild(option);
+                });
+            });
+        }
+
+        function toggleCustomMargins() {
+            const customMargins = document.getElementById('customMargins');
+            customMargins.style.display = customMargins.style.display === 'none' ? 'block' : 'none';
+        }
+
         function validateAndCalculate() {
             if (validateForm()) {
                 calculate();
@@ -255,66 +243,122 @@
         }
 
         function validateForm() {
-            const form = document.getElementById('framingForm');
-            const inputs = form.querySelectorAll('input[required], input[type="number"]');
-            let isValid = true;
-
-            inputs.forEach(input => {
-                const errorSpan = document.getElementById(`${input.id.replace('Whole', '')}Error`);
-                if (errorSpan) errorSpan.textContent = '';
-
-                if (input.hasAttribute('required') && !input.value.trim()) {
-                    if (errorSpan) errorSpan.textContent = 'This field is required.';
-                    isValid = false;
-                } else if (input.type === 'number' && input.value.trim()) {
-                    const value = parseFloat(input.value);
-                    const min = parseFloat(input.min);
-                    const max = parseFloat(input.max);
-
-                    if (isNaN(value)) {
-                        if (errorSpan) errorSpan.textContent = 'Please enter a valid number.';
-                        isValid = false;
-                    } else if (value < min || value > max) {
-                        if (errorSpan) errorSpan.textContent = `Value must be between ${min} and ${max}.`;
-                        isValid = false;
-                    }
-                }
-            });
-
-            return isValid;
+            // Implement form validation logic here
+            return true; // Placeholder
         }
 
         function calculate() {
-            const widthWhole = parseFloat(document.getElementById('fullSizeWidthWhole').value) || 0;
-            const widthFraction = parseFloat(document.getElementById('fullSizeWidthFraction').value) || 0;
-            const heightWhole = parseFloat(document.getElementById('fullSizeHeightWhole').value) || 0;
-            const heightFraction = parseFloat(document.getElementById('fullSizeHeightFraction').value) || 0;
-
-            const totalWidth = widthWhole + widthFraction;
-            const totalHeight = heightWhole + heightFraction;
-
-            // Placeholder for calculations
-            const results = {
-                totalMatOuterDimensions: { width: totalWidth + 10, height: totalHeight + 10 },
-                matView: { width: totalWidth, height: totalHeight }
+            // Gather input values
+            const sightSize = {
+                width: getInputValue('sightSizeWidth'),
+                height: getInputValue('sightSizeHeight')
             };
-            displayResults(results);
+            const overallSize = {
+                width: getInputValue('overallSizeWidth'),
+                height: getInputValue('overallSizeHeight')
+            };
+            const matSize = {
+                top: getInputValue('matSizeTop'),
+                right: getInputValue('matSizeRight'),
+                bottom: getInputValue('matSizeBottom'),
+                left: getInputValue('matSizeLeft')
+            };
+            const marginSize = getMarginSize();
+            const rabbitSize = getInputValue('rabbitSize');
+
+            // Perform calculations
+            const matOpening = calculateMatOpening(sightSize, marginSize);
+            const fullMatSize = calculateFullMatSize(matOpening, matSize, rabbitSize);
+            const innerFrameDiameter = calculateInnerFrameDiameter(fullMatSize);
+
+            // Display results
+            displayResults(matOpening, fullMatSize, innerFrameDiameter);
+            displaySuggestions(sightSize, matSize);
         }
 
-        function displayResults(results) {
+        function getInputValue(inputId) {
+            const whole = parseFloat(document.getElementById(inputId + 'Whole').value) || 0;
+            const fraction = parseFloat(document.getElementById(inputId + 'Fraction').value) || 0;
+            return whole + fraction;
+        }
+
+        function getMarginSize() {
+            const customMargins = document.getElementById('customMargins');
+            if (customMargins.style.display === 'none') {
+                const uniform = getInputValue('marginSize');
+                return { top: uniform, right: uniform, bottom: uniform, left: uniform };
+            } else {
+                return {
+                    top: getInputValue('marginSizeTop'),
+                    right: getInputValue('marginSizeRight'),
+                    bottom: getInputValue('marginSizeBottom'),
+                    left: getInputValue('marginSizeLeft')
+                };
+            }
+        }
+
+        function calculateMatOpening(sightSize, marginSize) {
+            return {
+                width: sightSize.width + marginSize.left + marginSize.right,
+                height: sightSize.height + marginSize.top + marginSize.bottom
+            };
+        }
+
+        function calculateFullMatSize(matOpening, matSize, rabbitSize) {
+            const adjustment = 1/16; // 1/16 inch adjustment
+            return {
+                width: matOpening.width + matSize.left + matSize.right + (2 * rabbitSize) - (2 * adjustment),
+                height: matOpening.height + matSize.top + matSize.bottom + (2 * rabbitSize) - (2 * adjustment)
+            };
+        }
+
+        function calculateInnerFrameDiameter(fullMatSize) {
+            return {
+                width: fullMatSize.width,
+                height: fullMatSize.height
+            };
+        }
+
+        function displayResults(matOpening, fullMatSize, innerFrameDiameter) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
-                <p>Total Mat Outer Dimensions: ${results.totalMatOuterDimensions.width.toFixed(4)} x ${results.totalMatOuterDimensions.height.toFixed(4)} inches</p>
-                <p>Mat View Dimensions: ${results.matView.width.toFixed(4)} x ${results.matView.height.toFixed(4)} inches</p>
+                <h2>Results</h2>
+                <p>Mat Opening: ${matOpening.width.toFixed(4)} x ${matOpening.height.toFixed(4)} inches</p>
+                <p>Full Mat Size: ${fullMatSize.width.toFixed(4)} x ${fullMatSize.height.toFixed(4)} inches</p>
+                <p>Inner Frame Diameter: ${innerFrameDiameter.width.toFixed(4)} x ${innerFrameDiameter.height.toFixed(4)} inches</p>
             `;
+        }
+
+        function displaySuggestions(sightSize, matSize) {
+            const suggestionsDiv = document.getElementById('suggestions');
+            const smallArtworkThreshold = 11; // Threshold for small artwork (in inches)
+            const isSmallArtwork = sightSize.width < smallArtworkThreshold || sightSize.height < smallArtworkThreshold;
+
+            if (isSmallArtwork) {
+                const suggestedMatSize = Math.max(3, Math.min(sightSize.width, sightSize.height) * 0.25);
+                suggestionsDiv.innerHTML = `
+                    <h2>Suggestions</h2>
+                    <p>For smaller artwork, consider using a larger mat to maintain aesthetic balance.</p>
+                    <p>Suggested mat size: ${suggestedMatSize.toFixed(2)} inches on all sides.</p>
+                `;
+            } else {
+                suggestionsDiv.innerHTML = ''; // Clear suggestions for larger artwork
+            }
         }
 
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.text("Framing Calculator Results", 10, 10);
+            // Add more content to the PDF here
             doc.save("Framing_Calculator_Results.pdf");
         }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateFractionDropdowns();
+            document.getElementById('customMarginBtn').addEventListener('click', toggleCustomMargins);
+        });
     </script>
 </body>
 </html>
