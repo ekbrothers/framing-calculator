@@ -6,6 +6,9 @@
     <title>Framing Calculator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
+        /* =====================
+           CSS STYLES
+           ===================== */
         :root {
             --primary-color: #BB86FC;
             --primary-variant: #3700B3;
@@ -51,14 +54,21 @@
             color: var(--on-surface);
         }
 
-        input[type="number"], select {
-            width: 70px;
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
             padding: 10px;
             margin-bottom: 15px;
             background-color: var(--background);
             border: 1px solid var(--primary-color);
             border-radius: 4px;
             color: var(--on-background);
+        }
+
+        input[type="number"],
+        select {
+            width: 70px;
         }
 
         button {
@@ -107,6 +117,18 @@
         <h1>Framing Calculator</h1>
         
         <form id="framingForm" novalidate>
+            <!-- =====================
+                 ARTWORK NAME INPUT
+                 ===================== -->
+            <h2>Artwork Information</h2>
+            <div class="dimension-input">
+                <label for="artworkName">Artwork Name:</label>
+                <input type="text" id="artworkName" required>
+            </div>
+
+            <!-- =====================
+                 SIGHT SIZE INPUTS
+                 ===================== -->
             <h2>Sight Size</h2>
             <div class="dimension-input">
                 <label for="sightSizeWidthWhole">Width:</label>
@@ -119,6 +141,9 @@
                 <select id="sightSizeHeightFraction"></select>
             </div>
 
+            <!-- =====================
+                 OVERALL SIZE INPUTS
+                 ===================== -->
             <h2>Overall Size</h2>
             <div class="dimension-input">
                 <label for="overallSizeWidthWhole">Width:</label>
@@ -131,6 +156,9 @@
                 <select id="overallSizeHeightFraction"></select>
             </div>
 
+            <!-- =====================
+                 MAT SIZE INPUTS
+                 ===================== -->
             <h2>Mat Size</h2>
             <div class="dimension-input">
                 <label for="matSizeTopWhole">Top:</label>
@@ -153,6 +181,9 @@
                 <select id="matSizeLeftFraction"></select>
             </div>
 
+            <!-- =====================
+                 MARGIN SIZE INPUTS
+                 ===================== -->
             <h2>Margin Size</h2>
             <div class="dimension-input">
                 <label for="marginSizeWhole">Uniform:</label>
@@ -183,6 +214,9 @@
                 </div>
             </div>
 
+            <!-- =====================
+                 RABBIT SIZE INPUT
+                 ===================== -->
             <h2>Rabbit Size</h2>
             <div class="dimension-input">
                 <label for="rabbitSizeWhole">Size:</label>
@@ -200,6 +234,11 @@
     </div>
 
     <script>
+        /* =====================
+           JAVASCRIPT FUNCTIONS
+           ===================== */
+
+        // Fraction options
         const fractions = [
             {value: 0, text: "0"},
             {value: 0.0625, text: "1/16"},
@@ -219,6 +258,7 @@
             {value: 0.9375, text: "15/16"}
         ];
 
+        // Populate fraction dropdowns
         function populateFractionDropdowns() {
             const fractionSelects = document.querySelectorAll('select');
             fractionSelects.forEach(select => {
@@ -231,24 +271,29 @@
             });
         }
 
+        // Toggle custom margins
         function toggleCustomMargins() {
             const customMargins = document.getElementById('customMargins');
             customMargins.style.display = customMargins.style.display === 'none' ? 'block' : 'none';
         }
 
+        // Validate and calculate
         function validateAndCalculate() {
             if (validateForm()) {
                 calculate();
             }
         }
 
+        // Form validation
         function validateForm() {
             // Implement form validation logic here
             return true; // Placeholder
         }
 
+        // Main calculation function
         function calculate() {
             // Gather input values
+            const artworkName = document.getElementById('artworkName').value;
             const sightSize = {
                 width: getInputValue('sightSizeWidth'),
                 height: getInputValue('sightSizeHeight')
@@ -272,16 +317,18 @@
             const innerFrameDiameter = calculateInnerFrameDiameter(fullMatSize);
 
             // Display results
-            displayResults(matOpening, fullMatSize, innerFrameDiameter);
+            displayResults(artworkName, matOpening, fullMatSize, innerFrameDiameter);
             displaySuggestions(sightSize, matSize);
         }
 
+        // Get input value (whole + fraction)
         function getInputValue(inputId) {
             const whole = parseFloat(document.getElementById(inputId + 'Whole').value) || 0;
             const fraction = parseFloat(document.getElementById(inputId + 'Fraction').value) || 0;
             return whole + fraction;
         }
 
+        // Get margin size
         function getMarginSize() {
             const customMargins = document.getElementById('customMargins');
             if (customMargins.style.display === 'none') {
@@ -297,6 +344,7 @@
             }
         }
 
+        // Calculate mat opening
         function calculateMatOpening(sightSize, marginSize) {
             return {
                 width: sightSize.width + marginSize.left + marginSize.right,
@@ -304,6 +352,7 @@
             };
         }
 
+        // Calculate full mat size
         function calculateFullMatSize(matOpening, matSize, rabbitSize) {
             const adjustment = 1/16; // 1/16 inch adjustment
             return {
@@ -312,6 +361,7 @@
             };
         }
 
+        // Calculate inner frame diameter
         function calculateInnerFrameDiameter(fullMatSize) {
             return {
                 width: fullMatSize.width,
@@ -319,17 +369,19 @@
             };
         }
 
-        function displayResults(matOpening, fullMatSize, innerFrameDiameter) {
+        // Display results
+        function displayResults(artworkName, matOpening, fullMatSize, innerFrameDiameter) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
-                <h2>Results</h2>
+                <h2>Results for "${artworkName}"</h2>
                 <p>Mat Opening: ${matOpening.width.toFixed(4)} x ${matOpening.height.toFixed(4)} inches</p>
                 <p>Full Mat Size: ${fullMatSize.width.toFixed(4)} x ${fullMatSize.height.toFixed(4)} inches</p>
                 <p>Inner Frame Diameter: ${innerFrameDiameter.width.toFixed(4)} x ${innerFrameDiameter.height.toFixed(4)} inches</p>
             `;
         }
 
-        function displaySuggestions(sightSize, matSize) {
+ // Display suggestions
+ function displaySuggestions(sightSize, matSize) {
             const suggestionsDiv = document.getElementById('suggestions');
             const smallArtworkThreshold = 11; // Threshold for small artwork (in inches)
             const isSmallArtwork = sightSize.width < smallArtworkThreshold || sightSize.height < smallArtworkThreshold;
@@ -346,11 +398,31 @@
             }
         }
 
+        // Generate PDF
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text("Framing Calculator Results", 10, 10);
-            // Add more content to the PDF here
+
+            // Add content to the PDF
+            doc.setFontSize(18);
+            doc.text("Framing Calculator Results", 105, 15, null, null, "center");
+
+            doc.setFontSize(12);
+            const artworkName = document.getElementById('artworkName').value;
+            doc.text(`Artwork: ${artworkName}`, 20, 30);
+
+            // Add more content (you can expand this to include all calculations)
+            const resultsDiv = document.getElementById('results');
+            const resultsText = resultsDiv.innerText;
+            const lines = doc.splitTextToSize(resultsText, 180);
+            doc.text(lines, 20, 40);
+
+            const suggestionsDiv = document.getElementById('suggestions');
+            const suggestionsText = suggestionsDiv.innerText;
+            const suggestionLines = doc.splitTextToSize(suggestionsText, 180);
+            doc.text(suggestionLines, 20, 100);
+
+            // Save the PDF
             doc.save("Framing_Calculator_Results.pdf");
         }
 
