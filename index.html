@@ -160,6 +160,31 @@
             </div>
 
             <!-- =====================
+                 ARTWORK BORDER INPUTS
+                 ===================== -->
+            <h2>Artwork Border</h2>
+            <div class="dimension-input">
+                <label for="artworkBorderTopWhole">Top:</label>
+                <input type="number" id="artworkBorderTopWhole" min="0" max="100" required>
+                <select id="artworkBorderTopFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="artworkBorderRightWhole">Right:</label>
+                <input type="number" id="artworkBorderRightWhole" min="0" max="100" required>
+                <select id="artworkBorderRightFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="artworkBorderBottomWhole">Bottom:</label>
+                <input type="number" id="artworkBorderBottomWhole" min="0" max="100" required>
+                <select id="artworkBorderBottomFraction"></select>
+            </div>
+            <div class="dimension-input">
+                <label for="artworkBorderLeftWhole">Left:</label>
+                <input type="number" id="artworkBorderLeftWhole" min="0" max="100" required>
+                <select id="artworkBorderLeftFraction"></select>
+            </div>
+
+            <!-- =====================
                  OVERALL SIZE INPUTS
                  ===================== -->
             <h2>Overall Size</h2>
@@ -200,9 +225,9 @@
             </div>
 
             <!-- =====================
-                 rabbet SIZE INPUT
+                 Rabbet SIZE INPUT
                  ===================== -->
-            <h2>rabbet Size</h2>
+            <h2>Rabbet Size</h2>
             <div class="dimension-input">
                 <label for="rabbetSizeWhole">Size:</label>
                 <input type="number" id="rabbetSizeWhole" min="0" max="100" value="0.25" required>
@@ -277,6 +302,12 @@
                 width: getInputValue('sightSizeWidth'),
                 height: getInputValue('sightSizeHeight')
             };
+            const artworkBorder = {
+                top: getInputValue('artworkBorderTop'),
+                right: getInputValue('artworkBorderRight'),
+                bottom: getInputValue('artworkBorderBottom'),
+                left: getInputValue('artworkBorderLeft')
+            };
             const overallSize = {
                 width: getInputValue('overallSizeWidth'),
                 height: getInputValue('overallSizeHeight')
@@ -290,12 +321,12 @@
             const rabbetSize = getInputValue('rabbetSize');
 
             // Perform calculations
-            const matOpening = calculateMatOpening(sightSize);
+            const matOpening = calculateMatOpening(sightSize, artworkBorder);
             const fullMatSize = calculateFullMatSize(matOpening, matSize, rabbetSize);
             const innerFrameDiameter = calculateInnerFrameDiameter(fullMatSize);
 
             // Display results
-            displayResults(artworkName, sightSize, matSize, matOpening, fullMatSize, innerFrameDiameter);
+            displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter);
             displaySuggestions(sightSize, matSize);
         }
 
@@ -307,10 +338,10 @@
         }
 
         // Calculate mat opening
-        function calculateMatOpening(sightSize) {
+        function calculateMatOpening(sightSize, artworkBorder) {
             return {
-                width: sightSize.width,
-                height: sightSize.height
+                width: sightSize.width + artworkBorder.left + artworkBorder.right,
+                height: sightSize.height + artworkBorder.top + artworkBorder.bottom
             };
         }
 
@@ -345,7 +376,7 @@
         }
 
         // Display results
-        function displayResults(artworkName, sightSize, matSize, matOpening, fullMatSize, innerFrameDiameter) {
+        function displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = `
                 <h2>Results for "${artworkName}"</h2>
@@ -354,6 +385,13 @@
                         <h3>Artwork Sight Size</h3>
                         <p>Width: ${decimalToFraction(sightSize.width)} inches</p>
                         <p>Height: ${decimalToFraction(sightSize.height)} inches</p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Artwork Border</h3>
+                        <p>Top: ${decimalToFraction(artworkBorder.top)} inches</p>
+                        <p>Right: ${decimalToFraction(artworkBorder.right)} inches</p>
+                        <p>Bottom: ${decimalToFraction(artworkBorder.bottom)} inches</p>
+                        <p>Left: ${decimalToFraction(artworkBorder.left)} inches</p>
                     </div>
                     <div class="result-item">
                         <h3>Mat Size</h3>
