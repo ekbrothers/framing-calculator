@@ -344,38 +344,42 @@
             return decimal.toFixed(4);
         }
 
-        // Display results
-        function displayResults(artworkName, sightSize, matSize, matOpening, fullMatSize, innerFrameDiameter) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = `
-                <h2>Results for "${artworkName}"</h2>
-                <div class="result-grid">
-                    <div class="result-item">
-                        <h3>Artwork Sight Size</h3>
-                        <p>${decimalToFraction(sightSize.width)} x ${decimalToFraction(sightSize.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Mat Size</h3>
-                        <p>Top: ${decimalToFraction(matSize.top)}"</p>
-                        <p>Right: ${decimalToFraction(matSize.right)}"</p>
-                        <p>Bottom: ${decimalToFraction(matSize.bottom)}"</p>
-                        <p>Left: ${decimalToFraction(matSize.left)}"</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Mat Opening</h3>
-                        <p>${decimalToFraction(matOpening.width)} x ${decimalToFraction(matOpening.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Full Mat Size</h3>
-                        <p>${decimalToFraction(fullMatSize.width)} x ${decimalToFraction(fullMatSize.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Inner Frame Diameter</h3>
-                        <p>${decimalToFraction(innerFrameDiameter.width)} x ${decimalToFraction(innerFrameDiameter.height)} inches</p>
-                    </div>
-                </div>
-            `;
-        }
+    // Display results
+function displayResults(artworkName, sightSize, matSize, matOpening, fullMatSize, innerFrameDiameter) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <h2>Results for "${artworkName}"</h2>
+        <div class="result-grid">
+            <div class="result-item">
+                <h3>Artwork Sight Size</h3>
+                <p>Width: ${decimalToFraction(sightSize.width)} inches</p>
+                <p>Height: ${decimalToFraction(sightSize.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Mat Size</h3>
+                <p>Height Top: ${decimalToFraction(matSize.top)}"</p>
+                <p>Height Bottom: ${decimalToFraction(matSize.bottom)}"</p>
+                <p>Width Left: ${decimalToFraction(matSize.left)}"</p>
+                <p>Width Right: ${decimalToFraction(matSize.right)}"</p>
+            </div>
+            <div class="result-item">
+                <h3>Mat Opening</h3>
+                <p>Width: ${decimalToFraction(matOpening.width)} inches</p>
+                <p>Height: ${decimalToFraction(matOpening.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Full Mat Size</h3>
+                <p>Width: ${decimalToFraction(fullMatSize.width)} inches</p>
+                <p>Height: ${decimalToFraction(fullMatSize.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Inner Frame Diameter</h3>
+                <p>Width: ${decimalToFraction(innerFrameDiameter.width)} inches</p>
+                <p>Height: ${decimalToFraction(innerFrameDiameter.height)} inches</p>
+            </div>
+        </div>
+    `;
+}
 
         // Display suggestions
         function displaySuggestions(sightSize, matSize) {
@@ -395,65 +399,65 @@
             }
         }
 
-        // Generate PDF
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+// Generate PDF
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-            // Add content to the PDF
-            doc.setFontSize(20);
-            doc.setTextColor(85, 51, 255);  // Set color to match your primary color
-            doc.text("Framing Calculator Results", 105, 15, null, null, "center");
+    // Add content to the PDF
+    doc.setFontSize(20);
+    doc.setTextColor(85, 51, 255);  // Set color to match your primary color
+    doc.text("Framing Calculator Results", 105, 15, null, null, "center");
 
-            doc.setFontSize(14);
-            doc.setTextColor(0, 0, 0);  // Reset to black
-            const artworkName = document.getElementById('artworkName').value;
-            doc.text(`Artwork: ${artworkName}`, 20, 30);
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 0);  // Reset to black
+    const artworkName = document.getElementById('artworkName').value;
+    doc.text(`Artwork: ${artworkName}`, 20, 30);
 
-            // Add results
-            doc.setFontSize(12);
-            const resultsDiv = document.getElementById('results');
-            const resultItems = resultsDiv.querySelectorAll('.result-item');
-            let yOffset = 40;
+    // Add results
+    doc.setFontSize(12);
+    const resultsDiv = document.getElementById('results');
+    const resultItems = resultsDiv.querySelectorAll('.result-item');
+    let yOffset = 40;
 
-            resultItems.forEach((item, index) => {
-                const title = item.querySelector('h3').textContent;
-                const content = item.querySelector('p').textContent;
+    resultItems.forEach((item, index) => {
+        const title = item.querySelector('h3').textContent;
+        const paragraphs = item.querySelectorAll('p');
 
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.text(title, 20, yOffset);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text(title, 20, yOffset);
+        yOffset += 7;
 
-                doc.setFont(undefined, 'normal');
-                const contentLines = doc.splitTextToSize(content, 170);
-                doc.text(contentLines, 20, yOffset + 7);
-
-                yOffset += 20 + (contentLines.length - 1) * 7;
-            });
-
-            // Add suggestions
-            const suggestionsDiv = document.getElementById('suggestions');
-            if (suggestionsDiv.innerHTML !== '') {
-                yOffset += 10;
-                doc.setFontSize(14);
-                doc.setFont(undefined, 'bold');
-                doc.text("Suggestions", 20, yOffset);
-
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'normal');
-                const suggestionsText = suggestionsDiv.innerText.replace("Suggestions", "").trim();
-                const suggestionLines = doc.splitTextToSize(suggestionsText, 170);
-                doc.text(suggestionLines, 20, yOffset + 10);
-            }
-
-            // Save the PDF
-            doc.save("Framing_Calculator_Results.pdf");
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            populateFractionDropdowns();
+        doc.setFont(undefined, 'normal');
+        paragraphs.forEach(p => {
+            const content = p.textContent;
+            const contentLines = doc.splitTextToSize(content, 170);
+            doc.text(contentLines, 20, yOffset);
+            yOffset += 7 * contentLines.length;
         });
+
+        yOffset += 5;  // Add some space between sections
+    });
+
+    // Add suggestions
+    const suggestionsDiv = document.getElementById('suggestions');
+    if (suggestionsDiv.innerHTML !== '') {
+        yOffset += 10;
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text("Suggestions", 20, yOffset);
+
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'normal');
+        const suggestionsText = suggestionsDiv.innerText.replace("Suggestions", "").trim();
+        const suggestionLines = doc.splitTextToSize(suggestionsText, 170);
+        doc.text(suggestionLines, 20, yOffset + 10);
+    }
+
+    // Save the PDF
+    doc.save("Framing_Calculator_Results.pdf");
+}
     </script>
 </body>
 </html>
