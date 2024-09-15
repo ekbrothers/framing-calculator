@@ -337,10 +337,10 @@
             const fullMatSize = calculateFullMatSize(matOpening, matSize, rabbetSize);
             const innerFrameDiameter = calculateInnerFrameDiameter(fullMatSize);
 
-            // Display results
-            displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter);
+            // Display results (now including rabbetSize)
+            displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter, rabbetSize);
             displaySuggestions(sightSize, matSize);
-        }
+}
 
         // Get input value (whole + fraction)
         function getInputValue(inputId) {
@@ -388,49 +388,68 @@
             return decimal.toFixed(4);
         }
 
-        // Display results
-        function displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = `
-                <h2>Results for "${artworkName}"</h2>
-                <div class="result-grid">
-                    <div class="result-item">
-                        <h3>Artwork Sight Size</h3>
-                        <p>Width: ${decimalToFraction(sightSize.width)} inches</p>
-                        <p>Height: ${decimalToFraction(sightSize.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Artwork Border</h3>
-                        <p>Top: ${decimalToFraction(artworkBorder.top)} inches</p>
-                        <p>Right: ${decimalToFraction(artworkBorder.right)} inches</p>
-                        <p>Bottom: ${decimalToFraction(artworkBorder.bottom)} inches</p>
-                        <p>Left: ${decimalToFraction(artworkBorder.left)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Mat Size</h3>
-                        <p>Height Top: ${decimalToFraction(matSize.top)} inches</p>
-                        <p>Height Bottom: ${decimalToFraction(matSize.bottom)} inches</p>
-                        <p>Width Left: ${decimalToFraction(matSize.left)} inches</p>
-                        <p>Width Right: ${decimalToFraction(matSize.right)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Mat Opening</h3>
-                        <p>Width: ${decimalToFraction(matOpening.width)} inches</p>
-                        <p>Height: ${decimalToFraction(matOpening.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Full Mat Size</h3>
-                        <p>Width: ${decimalToFraction(fullMatSize.width)} inches</p>
-                        <p>Height: ${decimalToFraction(fullMatSize.height)} inches</p>
-                    </div>
-                    <div class="result-item">
-                        <h3>Inner Frame Diameter</h3>
-                        <p>Width: ${decimalToFraction(innerFrameDiameter.width)} inches</p>
-                        <p>Height: ${decimalToFraction(innerFrameDiameter.height)} inches</p>
-                    </div>
-                </div>
-            `;
-        }
+// New helper function to calculate mat measuring points
+function calculateMatMeasuringPoints(matSize, rabbetSize) {
+    return {
+        top: matSize.top + rabbetSize,
+        right: matSize.right + rabbetSize,
+        bottom: matSize.bottom + rabbetSize,
+        left: matSize.left + rabbetSize
+    };
+}
+
+// Updated display results function
+function displayResults(artworkName, sightSize, artworkBorder, matSize, matOpening, fullMatSize, innerFrameDiameter, rabbetSize) {
+    const matMeasuringPoints = calculateMatMeasuringPoints(matSize, rabbetSize);
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <h2>Results for "${artworkName}"</h2>
+        <div class="result-grid">
+            <div class="result-item">
+                <h3>Artwork Sight Size</h3>
+                <p>Width: ${decimalToFraction(sightSize.width)} inches</p>
+                <p>Height: ${decimalToFraction(sightSize.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Artwork Border</h3>
+                <p>Top: ${decimalToFraction(artworkBorder.top)} inches</p>
+                <p>Right: ${decimalToFraction(artworkBorder.right)} inches</p>
+                <p>Bottom: ${decimalToFraction(artworkBorder.bottom)} inches</p>
+                <p>Left: ${decimalToFraction(artworkBorder.left)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Mat Size</h3>
+                <p>Height Top: ${decimalToFraction(matSize.top)} inches</p>
+                <p>Height Bottom: ${decimalToFraction(matSize.bottom)} inches</p>
+                <p>Width Left: ${decimalToFraction(matSize.left)} inches</p>
+                <p>Width Right: ${decimalToFraction(matSize.right)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Mat Opening</h3>
+                <p>Width: ${decimalToFraction(matOpening.width)} inches</p>
+                <p>Height: ${decimalToFraction(matOpening.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Full Mat Size</h3>
+                <p>Width: ${decimalToFraction(fullMatSize.width)} inches</p>
+                <p>Height: ${decimalToFraction(fullMatSize.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Inner Frame Diameter</h3>
+                <p>Width: ${decimalToFraction(innerFrameDiameter.width)} inches</p>
+                <p>Height: ${decimalToFraction(innerFrameDiameter.height)} inches</p>
+            </div>
+            <div class="result-item">
+                <h3>Mat Measuring Helper</h3>
+                <p>Measure from the outside edge of the mat:</p>
+                <p>Top: ${decimalToFraction(matMeasuringPoints.top)} inches</p>
+                <p>Right: ${decimalToFraction(matMeasuringPoints.right)} inches</p>
+                <p>Bottom: ${decimalToFraction(matMeasuringPoints.bottom)} inches</p>
+                <p>Left: ${decimalToFraction(matMeasuringPoints.left)} inches</p>
+            </div>
+        </div>
+    `;
+}
 
         // Display suggestions
         function displaySuggestions(sightSize, matSize) {
