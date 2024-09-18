@@ -368,12 +368,12 @@
 
         // Calculate inner frame diameter
         function calculateInnerFrameDiameter(fullMatSize) {
-            const adjustment = 1/8; // 1/8 inch adjustment to prevent binding
-            return {
-                width: fullMatSize.width + adjustment,
-                height: fullMatSize.height + adjustment
-            };
-        }
+        const tolerance = 1/16; // A small tolerance to prevent binding
+        return {
+            width: fullMatSize.width + tolerance,
+            height: fullMatSize.height + tolerance
+        };
+    }
 
         // Convert decimal to fraction string
         function decimalToFraction(decimal) {
